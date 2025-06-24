@@ -48,11 +48,11 @@ app.use(cookieParser());
 // Routes
 app.use("/auth", authRoutes);
 
-
 // Basic route
 app.get("/", (req: Request, res: Response) => {
-  res.status(OK).json({ message: "This is weatherHubAPI - Welcome!" });
+  res.status(OK).json({ message: "This is Attendance System API - Welcome!" });
 });
+
 
 // Error handling middleware
 app.use(
