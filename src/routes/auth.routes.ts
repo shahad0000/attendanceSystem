@@ -5,7 +5,6 @@ import * as AuthController from '../controllers/auth.controller';
 const router = Router();
 
 // Public routes
-
 router.post('/signup', AuthController.signUp);
 router.post('/signin', AuthController.signIn);
 router.post('/signout', AuthController.signOut);

@@ -7,11 +7,13 @@ import { CREATED, OK } from "../utils/http-status";
 
 const signUp = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { email, password } = req.body;
+    const { name, email, password, role } = req.body;
 
     const { user, accessToken, refreshToken } = await AuthService.signUp({
+      name,
       email,
       password,
+      role
     });
 
     // Set cookies
@@ -35,6 +37,7 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
         // Remove password from output
         user: {
           id: user.id,
+          name: user.name,
           email: user.email,
           role: user.role,
           createdAt: user.createdAt,
@@ -80,6 +83,7 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
         // Remove password from output
         user: {
           id: user.id,
+          name: user.name,
           email: user.email,
           role: user.role,
           createdAt: user.createdAt,

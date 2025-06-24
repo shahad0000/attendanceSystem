@@ -1,10 +1,12 @@
-import { Schema, model, Document } from 'mongoose';
-import bcrypt from 'bcryptjs';
+import { Schema, model, Document } from "mongoose";
+import bcrypt from "bcryptjs";
 
 export interface UserDocument extends Document {
+  id: string;
+  name: string;
   email: string;
   password: string;
-  role: 'user' | 'admin';
+  role: "admin" | "principal" | "teacher" | "student";
   createdAt: Date;
   updatedAt: Date;
   comparePassword(candidatePassword: string): Promise<boolean>;
@@ -12,6 +14,12 @@ export interface UserDocument extends Document {
 
 const userSchema = new Schema<UserDocument>(
   {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+      maxlength: 100,
+    },
     email: {
       type: String,
       required: true,
@@ -26,8 +34,8 @@ const userSchema = new Schema<UserDocument>(
     },
     role: {
       type: String,
-      enum: ['user', 'admin'],
-      default: 'user',
+      enum: ["admin", "principal", "teacher", "student"],
+      required: true,
     },
   },
   {
@@ -39,6 +47,7 @@ const userSchema = new Schema<UserDocument>(
       transform: function (doc, ret) {
         return {
           id: ret.id,
+          name: ret.name,
           email: ret.email,
           role: ret.role,
           createdAt: ret.createdAt,
@@ -52,6 +61,7 @@ const userSchema = new Schema<UserDocument>(
       transform: function (doc, ret) {
         return {
           id: ret.id,
+          name: ret.name,
           email: ret.email,
           role: ret.role,
           createdAt: ret.createdAt,
@@ -63,8 +73,8 @@ const userSchema = new Schema<UserDocument>(
 );
 
 // Hash password before saving
-userSchema.pre('save', async function (next) {
-  if (!this.isModified('password')) return next();
+userSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) return next();
 
   try {
     const salt = await bcrypt.genSalt(10);
@@ -82,4 +92,4 @@ userSchema.methods.comparePassword = async function (
   return bcrypt.compare(candidatePassword, this.password);
 };
 
-export const UsersCollection = model<UserDocument>('User', userSchema); 
+export const UsersCollection = model<UserDocument>("User", userSchema);
