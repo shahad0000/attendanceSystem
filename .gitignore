@@ -1,1 +1,2 @@
 .env
+logs/ # Ignore the entire logs directory
