@@ -1,4 +1,4 @@
 .env
-logs/ # Ignore the entire logs directory
+logs/
 .DS_Store
 node_modules/
