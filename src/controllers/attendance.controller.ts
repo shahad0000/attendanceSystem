@@ -4,8 +4,6 @@ import { AttendenceCollection } from "../models/attendence.model"
 export const createAttendance = async (req: Request, res: Response, next: NextFunction) => {
   try {
 
-    console.log(req.body)
-
     const attendance = await AttendenceCollection.create(req.body)
 
     res.status(201).json({ status: "success", data: { attendance } });
@@ -25,7 +23,7 @@ export const updateAttendance = async (req: Request, res: Response, next: NextFu
     
       const attendance = await AttendenceCollection.findByIdAndUpdate(id, updates, { new: true });
       if (!attendance) {
-        res.status(404).json({ message: "User not found" });
+        res.status(404).json({ message: "attendance not found" });
         return;
       }
     
