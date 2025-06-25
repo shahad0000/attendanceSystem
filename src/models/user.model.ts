@@ -40,7 +40,6 @@ const userSchema = new Schema<UserDocument>(
   },
   {
     timestamps: true,
-    id: false,
     toJSON: {
       virtuals: true,
       versionKey: false,

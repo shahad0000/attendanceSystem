@@ -1,4 +1,5 @@
 import { UsersCollection } from "../models/user.model";
+import { ClassCollection } from "../models/class.model";
 
 interface CreateUserDTO {
   name: string;
@@ -32,3 +33,21 @@ export const deleteUserService = async (id: string) => {
   const user = await UsersCollection.findByIdAndDelete(id);
   return user;
 };
+
+// Create a class
+export const createClassService = async (data: {
+    name: string;
+    description: string;
+    location: string;
+    capacity: number;
+    dateStartAt: string;
+    dateEndAt: string;
+    timeStartAt: string;
+    timeEndAt: string;
+  }) => {
+    return await ClassCollection.create({
+      ...data,
+      dateStartAt: new Date(data.dateStartAt),
+      dateEndAt: new Date(data.dateEndAt),
+    });
+  };
