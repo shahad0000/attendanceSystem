@@ -5,6 +5,7 @@ import {
   getUsersService,
   updateUserService,
   deleteUserService,
+  deleteAllUsersService
 } from "../services/admin.service";
 
 export const createUser = async (
@@ -68,3 +69,19 @@ export const deleteUser = async (req: Request, res: Response) => {
   res.json({ status: "success", message: "User deleted" });
   return;
 };
+
+// Delete all users
+export const deleteAllUsers = async (req: Request, res: Response) => {
+    try {
+      const result = await deleteAllUsersService();
+  
+      res.json({
+        status: "success",
+        message: `All users deleted successfully`,
+        deletedCount: result.deletedCount,
+      });
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  };
+  
