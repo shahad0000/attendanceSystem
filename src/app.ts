@@ -14,6 +14,7 @@ import authRoutes from "./routes/auth.routes";
 import adminRoutes from "./routes/admin.routes";
 import classRoutes from "./routes/class.routes";
 import participantRoutes from "./routes/participant.routes";
+import principalRoutes from "./routes/principal.routes";
 
 // // Delete all collections
 // deleteAllCollections();
@@ -47,6 +48,7 @@ app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
 app.use("/class", classRoutes);
 app.use("/participants", participantRoutes);
+app.use("/principal", principalRoutes);
 
 // Basic route
 app.get("/", (req: Request, res: Response) => {

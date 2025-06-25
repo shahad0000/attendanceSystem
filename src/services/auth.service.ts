@@ -52,12 +52,7 @@ const signIn = async (
   refreshToken: string;
 }> => {
   const user = await UsersCollection.findOne({ email });
-  // if (!user || !(await user.comparePassword(password))) {
-  //   throw new AppError("Invalid credentials", UNAUTHORIZED);
-  // }
-  console.log("Attempting login for:", email);
-  if (!user) {
-    console.log("User not found");
+  if (!user || !(await user.comparePassword(password))) {
     throw new AppError("Invalid credentials", UNAUTHORIZED);
   }
 

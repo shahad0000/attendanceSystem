@@ -29,7 +29,6 @@ export const createUser = async (
   }
 };
 
-// get users by role
 export const getUsers = async (
   req: AuthRequest,
   res: Response
