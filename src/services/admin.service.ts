@@ -34,6 +34,11 @@ export const deleteUserService = async (id: string) => {
   return user;
 };
 
+export const deleteAllUsersService = async () => {
+  return await UsersCollection.deleteMany({});
+};
+
+
 // Create a class
 export const createClassService = async (data: {
     name: string;

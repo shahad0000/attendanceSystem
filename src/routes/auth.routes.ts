@@ -8,7 +8,6 @@ const router = Router();
 router.post('/signup', AuthController.signUp);
 router.post('/signin', AuthController.signIn);
 router.post('/signout', AuthController.signOut);
-router.post('/refresh-token', AuthController.refreshToken);
 
 // Authorized routes
 router.delete('/delete-account', authorized, AuthController.deleteAccount);

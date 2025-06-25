@@ -4,6 +4,7 @@ import {
   getUsers,
   updateUser,
   deleteUser,
+  deleteAllUsers
 } from "../controllers/admin.controller";
 import { authorized } from '../middleware/auth.middleware';
 
@@ -16,5 +17,5 @@ router.post("/users", createUser);
 router.get("/users", getUsers);            
 router.put("/users/:id", updateUser); 
 router.delete("/users/:id", deleteUser);   
-
+router.delete("/users", deleteAllUsers); 
 export default router;
