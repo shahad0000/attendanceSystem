@@ -1,29 +1,22 @@
 import { ClassCollection } from "../models/class.model";
 
-export const assignStudentsService = async (classId: string, studentIds: string[]) => {
-  return await ClassCollection.findByIdAndUpdate(
-    classId,
-    { $addToSet: { students: { $each: studentIds } } },
-    { new: true }
-  );
+// Create a class
+export const createClassService = async (data: {
+  name: string;
+  description: string;
+  location: string;
+  capacity: number;
+  dateStartAt: string;
+  dateEndAt: string;
+  timeStartAt: string;
+  timeEndAt: string;
+}) => {
+  return await ClassCollection.create({
+    ...data,
+    dateStartAt: new Date(data.dateStartAt),
+    dateEndAt: new Date(data.dateEndAt),
+  });
 };
-
-export const assignTeachersService = async (classId: string, teacherIds: string[]) => {
-  return await ClassCollection.findByIdAndUpdate(
-    classId,
-    { $addToSet: { teachers: { $each: teacherIds } } },
-    { new: true }
-  );
-};
-
-export const assignPrincipalService = async (classId: string, principalId: string) => {
-  return await ClassCollection.findByIdAndUpdate(
-    classId,
-    { principal: principalId },
-    { new: true }
-  );
-};
-
 
 // Get all classes
 export const getClassesService = async () => {

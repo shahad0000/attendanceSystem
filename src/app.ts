@@ -12,9 +12,6 @@ import { connectDB, deleteAllCollections } from "./config/db";
 import { AppError } from "./utils/error";
 import authRoutes from "./routes/auth.routes";
 import adminRoutes from "./routes/admin.routes";
-import classRoutes from "./routes/class.routes";
-import participantRoutes from "./routes/participant.routes";
-import principalRoutes from "./routes/principal.routes";
 
 // // Delete all collections
 // deleteAllCollections();
@@ -25,12 +22,10 @@ connectDB();
 const app: Express = express();
 
 // Middleware
-app.use(
-  cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
-    credentials: true,
-  })
-);
+app.use(cors({
+  origin: process.env.CORS_ORIGIN || 'http://localhost:3000',
+  credentials: true
+}));
 app.use(helmet());
 app.use(
   morgan("tiny", {
@@ -46,9 +41,6 @@ app.use(cookieParser());
 // Routes
 app.use("/auth", authRoutes);
 app.use("/admin", adminRoutes);
-app.use("/class", classRoutes);
-app.use("/participants", participantRoutes);
-app.use("/principal", principalRoutes);
 
 // Basic route
 app.get("/", (req: Request, res: Response) => {

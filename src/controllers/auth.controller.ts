@@ -1,20 +1,24 @@
 import { Request, Response, NextFunction } from "express";
 import * as AuthService from "../services/auth.service";
 import { AppError } from "../utils/error";
-import { AuthRequest } from "../middleware/auth.middleware";
-import { dev } from "../utils/helpers";
+import { AuthRequest } from "../middleware/auth.middleware"; // custom tyoe that includes the user
+import { dev } from "../utils/helpers"; // boolean flag to check if the environment is development or production.
 import { CREATED, OK } from "../utils/http-status";
 
 const signUp = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { name, email, password, role } = req.body;
 
+
+    // Calls the signup service to create a user and generate tokens
     const { user, accessToken, refreshToken } = await AuthService.signUp({
       name,
       email,
       password,
       role
     });
+
+    // Sets tokens as HTTP-only cookies
 
     // Set cookies
     res.cookie("accessToken", accessToken, {
@@ -31,6 +35,7 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
       sameSite: dev ? "lax" : "none",
     });
 
+    // Responds with user data (without password) and the tokens.
     res.status(CREATED).json({
       status: "success",
       data: {
@@ -99,6 +104,7 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const signOut = async (req: Request, res: Response) => {
+  // Overwrites tokens with 'none', expires in 5 seconds
   res.cookie("accessToken", "none", {
     expires: new Date(Date.now() + 5 * 1000),
     httpOnly: true,
@@ -114,6 +120,7 @@ const signOut = async (req: Request, res: Response) => {
   });
 };
 
+// Replaces expired access token using a refresh token
 const refreshToken = async (
   req: Request,
   res: Response,
@@ -126,6 +133,7 @@ const refreshToken = async (
       throw new AppError("Refresh token not provided", 401);
     }
 
+    // Verifies and refreshes token
     const tokens = await AuthService.refreshToken(refreshToken);
 
     // Set new cookies
@@ -141,6 +149,7 @@ const refreshToken = async (
       maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
     });
 
+    // Returns the new tokens in the response
     res.status(OK).json({
       status: "success",
       data: tokens,
@@ -150,15 +159,18 @@ const refreshToken = async (
   }
 };
 
-
-
+// Authenticated User Account Deletion
 const deleteAccount = async (
   req: AuthRequest,
   res: Response,
   next: NextFunction
 ) => {
   try {
+
+    // Deletes the user account based on ID
     await AuthService.deleteAccount(req.user.id);
+
+    // Clears authentication cookies
 
     res.cookie("accessToken", "none", {
       expires: new Date(Date.now() + 5 * 1000),
