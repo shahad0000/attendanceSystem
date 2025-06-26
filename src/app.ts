@@ -29,7 +29,6 @@ const app: Express = express();
 // Middleware
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "https://flourishing-mochi-19a4c2.netlify.app",
     credentials: true,
   })
 );
