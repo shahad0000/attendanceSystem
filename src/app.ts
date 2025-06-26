@@ -16,6 +16,7 @@ import classRoutes from "./routes/class.routes";
 import participantRoutes from "./routes/participant.routes";
 import principalRoutes from "./routes/principal.routes";
 import teacherRoutes from "./routes/teacher.routes";
+import studentRouter from "./routes/student.routes";
 
 // // Delete all collections
 // deleteAllCollections();
@@ -51,6 +52,7 @@ app.use("/class", classRoutes);
 app.use("/participants", participantRoutes);
 app.use("/principal", principalRoutes);
 app.use("/teacher", teacherRoutes);
+app.use("/student", studentRouter);
 
 // Basic route
 app.get("/", (req: Request, res: Response) => {

@@ -12,7 +12,7 @@ const leaveSchema = new Schema(
       ref: "User",
       required: true,
     },
-    leavedAt: { type: String, required: true },
+    leavedAt: { type: Date, default: Date.now },
     leaveType: {
       type: String,
       enum: ["accepted", "rejected", "pending"],

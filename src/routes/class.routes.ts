@@ -6,7 +6,7 @@ import {
   assignPrincipalToClass,
   assignTeachersToClass,
 } from "../controllers/class.controller";
-import {getAttendance, updateAttendance, createAttendance, deleteAttendance} from "../controllers/attendance.controller"
+import {getAttendance, updateAttendance, createAttendance, deleteAttendance, getAttendances} from "../controllers/attendance.controller"
 
 const router = express.Router();
 
@@ -19,9 +19,10 @@ router.put("/:id/students", assignStudentsToClass);
 router.put("/:id/teachers", assignTeachersToClass);
 router.put("/:id/principal", assignPrincipalToClass);
 
+// attendance
 router.post("/:id/attendance", createAttendance);
-
-router.get("/:id/attendance/:atId", getAttendance);
+router.get("/:id/attendance/", getAttendances); // get all
+router.get("/:id/attendance/:atId", getAttendance); // get one
 router.put("/:id/attendance/:atId", updateAttendance);
 router.delete("/:id/attendance/:atId", deleteAttendance);
 
