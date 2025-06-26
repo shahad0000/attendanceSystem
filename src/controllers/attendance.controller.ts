@@ -35,6 +35,26 @@ export const updateAttendance = async (req: Request, res: Response, next: NextFu
   }
 };
 
+// get all Attendances
+export const getAttendances = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    
+      const getAttendances = await AttendenceCollection.find({});
+
+      if (!getAttendances) {
+        res.status(404).json({ message: "attendances not found" });
+        return;
+      }
+    
+      res.json({ status: "success", data: { attendances: getAttendances } });
+
+  } catch (error) {
+    console.error("getAttendances ERROR:", error);
+    next(error);
+  }
+};
+
+// get one
 export const getAttendance = async (req: Request, res: Response, next: NextFunction) => {
   try {
 

@@ -35,6 +35,25 @@ export const updateLeave = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
+// get all leaves
+export const getLeaves = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    
+      const leave = await LeaveCollection.find({});
+
+      if (!leave) {
+        res.status(404).json({ message: "leaves not found" });
+        return;
+      }
+    
+      res.json({ status: "success", data: { leave: leave } });
+
+  } catch (error) {
+    console.error("getLeaves ERROR:", error);
+    next(error);
+  }
+};
+
 export const getLeave = async (req: Request, res: Response, next: NextFunction) => {
   try {
 

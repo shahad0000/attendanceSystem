@@ -83,4 +83,17 @@ export const deleteAllUsers = async (req: Request, res: Response) => {
       res.status(500).json({ message: error.message });
     }
   };
+
+
+// get all reports
+export const getReports = async (
+  req: AuthRequest,
+  res: Response
+): Promise<void> => {
+
+  // const users = await getUsersService();
+  
+  // res.json({ status: "success", data: users });
+  return;
+};
   
