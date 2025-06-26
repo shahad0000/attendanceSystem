@@ -29,7 +29,7 @@ const app: Express = express();
 // Middleware
 app.use(
   cors({
-    origin: "*",
+    origin: ["http://localhost:5173", "https://flourishing-mochi-19a4c2.netlify.app"],
     credentials: true,
   })
 );
