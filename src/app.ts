@@ -26,13 +26,25 @@ connectDB();
 
 const app: Express = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://flourishing-mochi-19a4c2.netlify.app",
+];
+
 // Middleware
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://flourishing-mochi-19a4c2.netlify.app"],
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl)
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error("Not allowed by CORS"));
+    },
     credentials: true,
   })
 );
+
 app.use(helmet());
 app.use(
   morgan("tiny", {
